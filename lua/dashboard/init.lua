@@ -246,12 +246,6 @@ function db:instance()
     return
   end
 
-  if not vim.o.hidden and vim.bo.modified then
-    --save before open
-    vim.cmd.write()
-    return
-  end
-
   if vim.fn.line2byte('$') ~= -1 then
     vim.cmd('noautocmd')
     self.bufnr = api.nvim_create_buf(true, true)
