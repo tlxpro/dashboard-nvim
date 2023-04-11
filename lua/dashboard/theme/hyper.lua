@@ -220,7 +220,6 @@ local function map_key(config, key, content)
     local path = text:sub(1, text:find('%w(%s+)$'))
     path = vim.fs.normalize(path)
     if vim.fn.isdirectory(path) == 1 then
-      vim.cmd('lcd ' .. path)
       if type(config.project.action) == 'function' then
         config.project.action(path)
       elseif type(config.project.action) == 'string' then
