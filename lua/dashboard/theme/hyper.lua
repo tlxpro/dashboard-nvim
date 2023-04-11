@@ -213,6 +213,9 @@ local function map_key(config, key, content)
   keymap.set('n', key, function()
     local text = content or api.nvim_get_current_line()
     local scol = utils.is_win and text:find('%w') or text:find('%p')
+    if not scol then
+      return
+    end
     text = text:sub(scol)
     local path = text:sub(1, text:find('%w(%s+)$'))
     path = vim.fs.normalize(path)
@@ -229,6 +232,9 @@ local function map_key(config, key, content)
         end
       end
     else
+      if vim.fn.filereadable(path) == 0 then
+        return
+      end
       vim.cmd('edit ' .. path)
       local root = utils.get_vcs_root()
       if not config.change_to_vcs_root then
